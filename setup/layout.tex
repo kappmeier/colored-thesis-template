@@ -1,0 +1,134 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The main colors of the thesis.
+% If the thesis should not be completely colored (as this is expensive in
+% printing), set the mainColor to black, but leave first figureColor with the
+% original value if figures should still contain colors.
+%
+% The main color for headlines, the tile, paragraphs and so on.
+\newcommand{\mainColor}{MidnightBlue}
+%
+% The mainly used color for figures. Is \mainColor, if that is not black.
+\newcommand{\figureColor}{\mainColor}
+%
+% Different name in the ABCD-scheme for the primary color.
+\newcommand{\figureColorA}{\figureColor}
+%
+% Secondary image color.
+\newcommand{\figureColorB}{YellowGreen}
+%
+% The ternary image color.
+\newcommand{\figureColorC}{RedOrange}
+%
+% The quaternary image color.
+\newcommand{\figureColorD}{Fuchsia}
+%
+% A last pre-defined color, gray which works well with all color schemes.
+\newcommand{\flatColor}{gray}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include the hyperref package. This allows the pdf file to have clickable
+% links. The links may go to external or to internal targets. Internal links are
+% used for references to figures or algoriths, to the bibliography, or others.
+% External links are URLs.
+% The links are black (as default font color), with the exception that linkcolor
+% which links to internal anchors (Figures, Chapters, etc) have the flat color.
+\usepackage
+[
+  unicode,
+  pdfencoding=auto,
+  breaklinks=true,
+  hyperfigures,
+  hidelinks,
+  colorlinks=true,
+  linkcolor=\flatColor,
+  urlcolor=black,
+  citecolor=black,
+  hyperindex,
+  bookmarksnumbered,
+  plainpages=false,
+  pdftitle={\thesistitle},
+  pdfauthor={\thesisauthor},
+  pdfsubject={\thesissubject},
+  pdfcreator={xelatex}, 
+  pdfkeywords={\thesiskeywords}
+]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paragraph formatting.
+% This style sets a paragraph to be semi bold in the main color. It does not
+% look to heavy. Also, paragraph headlines are not on their own line but end
+% with a . (dot) and after a shor space the paragraph text begins. Each
+% paragraph will have a small skip space above. It is intended that paragraphs
+% are used extensively.
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{0mm}%
+{-\baselineskip} % beforeskip
+{-\baselineskip} % afterskip
+{\color{\mainColor}\semiboldsans}
+}%
+\makeatother 
+\let\originalparagraph\paragraph
+\renewcommand{\paragraph}[2][.]{\originalparagraph{#2#1}}
+\let\originalsubparagraph\subparagraph
+\renewcommand{\subparagraph}[2][.]{\originalsubparagraph{#2#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Publication remark.
+% In thesises it required that content, that is already published elsewere is
+% disclosed. Publication remark adds a paragraph with the text
+% 'Publication Remark:', which in contrast to the default paragraph does not
+% end with a dot.
+% It is supposed to be used in the abstract at the beginning of each chapter,
+% as defined by the command \chapterabstract (see below)
+\newcommand{\publicationremark}{\originalparagraph{Publication Remark:}}
+
+\setkomafont{sectioning}{\sffamily\color{\mainColor}}
+\addtokomafont{subsubsection}{\semiboldsans}
+\setkomafont{subparagraph}{\normalfont\sffamily\itshape}
+
+\setlength{\mathindent}{1.5cm}
+\newlength{\standardIntend}
+\setlength{\standardIntend}{\mathindent}
+\setlength{\mathindent}{\standardIntend}
+
+\renewcommand{\headfont}{\color{\mainColor}\footnotesize\sffamily} % font for the header
+\renewcommand{\pnumfont}{\color{\mainColor}\footnotesize\sffamily} % font for the pagenumbers
+
+
+% Dictum text before the main part starts.
+\makeatletter
+\renewcommand{\dictum}[2][]{\par%
+  \begingroup
+    \raggeddictum\parbox{\dictumwidth}{%
+      {\@dictumfont{\raggeddictumtext #2\strut\par}%
+        \def\@tempa{#1}\ifx\@tempa\@empty\else%
+          {\raggeddictumtext\vskip-1ex\par}%
+          \raggeddictumauthor\@dictumauthorfont\dictumauthorformat{#1}%
+          \strut\par%
+        \fi%
+      }%
+    }\par%
+  \endgroup
+}
+\makeatother
+
+\renewcommand*{\dictumwidth}{.6667\textwidth}
+\setkomafont{dictumtext}{\normalfont\normalcolor\small}
+\renewcommand*{\dictumauthorformat}[1]{\vspace{5mm}-- #1}
+
+
+% Short abstracts at the beginning of chapters.
+\newcommand\abstractname{Abstract} %%% here
+\makeatletter
+\newenvironment{chapterabstract}{%
+\small
+\begin{addmargin*}{2cm}%
+}
+{
+\end{addmargin*}%
+\chapterheadendvskip
+}
+\makeatother

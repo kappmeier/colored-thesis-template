@@ -1,0 +1,41 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This Latex template contains everything to build a doctoral thesis. Some of the contents may not be necessary, they simply can be deleted or commented out.
+
+The whole project is stored as kile project.
+
+\paragraph{Basics}
+The template is designed to use a modern 2018 software stack. It uses xelatex and the fontspec packages. The bibliogrpahy backend is set up to be \emph{biber}.
+
+Bibliography style and other settings are defined as they are typical for a mathematical or technical thesis. The setup includes theorem environments as well as algorithms.
+
+The front page is manually set up to be the front page of the Technische Universität Berlin. It can be adaptad completely, the setup is done in files in the \texttt{backmatter} folder.
+
+\paragraph{Fonts}
+By default, the layout uses the Adobe fonts \emph{Minion Pro} and \emph{Myriad Pro} for serif and sans serif typesetting. Math is typeset using \emph{Minion Math}, a designated math font fitting to the Minion Pro. While the first two can be aquired easily from the web, the latter is only available at \url{http://www.typoma.com}.
+
+If this is not desired, it is enough to comment the font settings in \texttt{fonts.tex}. An alternative is for example the XITS font package.
+
+\paragraph{Layout}
+The style of the thesis follows a plain and simple layout, but comprises color by default. Besides black as the default text color a second color is used to set up highlights. Thus, captions, page numbers, book titles, etc. are printed in the given color.
+
+As advantage this gives a nice look of the thesis. As disadvantage it may be expensive to print. Shall the thesis be classic black and white, it is enough to redefine the \lstinline{\mainColor} to be black.
+
+\paragraph{Cover}
+The cover is included as pdf and is defined as in the cover folder. The cover template is based on an image which is included in three different xelatex projects. The three projects extract a front cover page, a back cover page, and a complete cover page. The first two cover pages have the Din A4 size of the thesis and are included in digital versions. The complete cover can be given to a print shop to create an encircling cover for a book release.
+
+The cover includes the same basic properties, such as the thesis' title, to have a coherent product.
+
+The cover page is colored such that different parts can be easily seen. The actual size of the image depends of the width of the final book which depends on the thickness of the used paper and the number of pages. It has to be adjusted and the values in the \texttt{definitions.tex} have to be set accordingly. The example cover has a width of 8mm, and the value is stored as length \lstinline{\backwidth}.
+
+The image contains a border of width 3mm (stored as length \lstinline{\sepwidth} in \texttt{definitions.tex}). The length is a border that is required by certain technical processes during printing. The exact length depends on the specific print shop. It will be cut off and not visible in printing.
+
+\paragraph{Overview}
+Chapter~\ref{chapter:preliminaries} gives an overview over some techniques such as mathematical environments, pictures, and algorithms. The examples also comprise short source code.
+
+\paragraph{Slipsum}
+The next Chapter~\ref{chapter:stuff} contains some fuckin' great shizzle.
+
+\paragraph{Dizzle}
+The next Chapter~\ref{chapter:dizzle} contains also some dizzle.

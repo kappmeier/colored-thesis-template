@@ -1,0 +1,76 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This document sets up the front matter. It includes the following pages:
+%
+% Bastard or extra title.
+%  -- Contains the title and author
+%
+% Bastard title verso.
+%  -- Contains cover picture description, where frontispiece is located.
+%     The design of the extratitle and its verso is in
+%     frontmatter/definition/titlepagedef
+%
+% Title page.
+%  -- The titlepage, typically with official layout of institution. The
+%     definition of the actual titlepage for customization is in
+%     frontmatter/definition/titlepagedef.
+%
+% Title page verso.
+%  -- Contains additional information, bibliography, copyright, publisher,
+%     thesis revision and colophon. Its layout is defined in
+%     frontmatter/definition/backtitledef
+%
+% Dedication
+%  -- The dedication is included by the title page, if it is specified.
+%
+% Acknowledgementss.
+%  -- Contains a short thank you text which is dedicated to fellow
+%     researchers, the work group, and family and friends of them
+%     of the author.
+%
+% The layout is filled with values that are defined in thesisproperties.tex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include custom front matter definitions.
+%
+\input{frontmatter/definition/bastardtitledef}
+\input{frontmatter/definition/titlepagedef}
+\input{frontmatter/definition/backtitledef}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up Koma script variables with the custom commands.
+%
+\ifx\thesistitle\@empty\else\title{\thesistitle}\fi
+\ifx\thesissubtitle\@empty\else\subtitle{\thesissubtitle}\fi
+\ifx\thesisdate\@empty\else\date{\thesisdate}\fi
+\ifx\thesisauthor\@empty\else\author{\thesisauthor}\fi
+\ifx\thesisdedication\@empty\else\dedication{\thesisdedication}\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include the actual title pages. Each of them are two pages.
+%
+\input{frontmatter/bastardtitle}
+\input{frontmatter/titlepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include acknowledgements.
+% There is not a fixed position for acknowledgements, they can either be in
+% the beginning or at the end. They do not belong to main matter and for PhD
+% thesises they are often in the beginning.
+%
+\input{frontmatter/acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include the table of contents.
+% To adjust the contents to the color scheme (if \maincolor is set to a
+% different color than black, links are hidden temporarily.
+%
+{
+  \hypersetup{hidelinks}
+  \tableofcontents
+}

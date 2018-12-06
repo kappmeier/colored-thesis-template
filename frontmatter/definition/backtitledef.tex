@@ -1,0 +1,47 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Koma upper tittle back contains the bibliography information of the thesis.
+\ifx\thesisbibliography\empty
+\else
+  \uppertitleback{\thesisbibliography}
+\fi
+
+\lowertitleback{
+  \textbf{Copyright:}\\© \thesisyear{} \thesisauthor%
+  \ifx\thesispublisher\empty
+  \else
+    \\[5mm]%
+    \textbf{Publisher:}\\{\thesispublisher}%
+    \ifx\theisbn\empty
+    \else
+      \\%
+      ISBN {\theisbn}%
+    \fi
+  \fi
+  \ifx\finalrevision\empty
+  \else
+    \\[5mm]%
+    \textbf{Final Revision:} \finalrevision%
+  \fi
+  \ifx\colophontypesetting\empty
+  \else
+    \\[5mm]%
+    \textbf{Typesetting:}%
+    \\{\colophontypesetting}%
+  \fi
+  \ifx\colophonfonts\empty
+  \else
+    \\[5mm]%
+    \textbf{Fonts:}\\{\colophonfonts}%
+  \fi
+  \ifx\colophonaddendum\empty
+  \else
+    \\[5mm]%
+    {\colophonaddendum}%
+  \fi
+  \\[5mm]%
+  {Thesis layout template created by Jan-Philipp Kappmeier, \url{http://kappmeier.de}}%
+}
+
+ 

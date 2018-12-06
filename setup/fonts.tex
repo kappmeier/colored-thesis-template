@@ -1,0 +1,78 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% XeLaTeX allows to use all types of Open Type fonts. In the following a font
+% setup using publicly available fonts from Adobe is defined, together with a
+% comercially available math font fitting well to the text fonts.
+% Uncomment to enable the fonts.
+
+\usepackage[log-declarations=false]{xparse}
+
+% Loading fontspec and math fonts allowing for Unicode. Has to happen in this order.
+\usepackage{amsmath}
+\usepackage[quiet]{fontspec}
+\usepackage{unicode-math}
+
+% Define Adobe fonts and fitting math font Typoma Minion Math.
+\setmainfont[Ligatures=TeX]{Minion Pro} % available with an acrobat reader installation
+\setsansfont[Ligatures=TeX]{Myriad Pro} % available with an acrobat reader installation
+\setmathfont{Minion Math} % available on typoma.com
+
+% The math fonts does not include (Bold) Calligraphic styles, as backup we use XITS package.
+% https://fontlibrary.org/de/font/xits-math
+\setmathfont[range={\mathcal},StylisticSet=1]{XITS Math}
+\setmathfont[range={\mathbfcal},StylisticSet=2]{XITS Math}
+
+% Additional font families
+\newfontfamily\semiboldsans[Ligatures=TeX]{Myriad Pro Semibold}
+\newfontfamily\boldsans[Ligatures=TeX]{Myriad Pro-Bold}
+\newfontfamily\semiboldserif[Ligatures=TeX]{Minion Pro Semibold}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Non existing small caps.
+%
+% Some fonts do not have small caps (either in general or fore some font shapes.
+% Mostly, italic small caps are not available. However, the Adobe Minion Pro and
+% Myriad Pro fonts to not contain small caps in general.
+% The following commands redefine the font shapes to be substituted by other
+% shapes when used.
+% This means, they are simply not small caps, but the standard font. If small
+% caps are really needed, there are two options:
+%  1. Use a font that is supporting it
+%  2. Use faux small caps: https://tex.stackexchange.com/a/225078/47921
+%     (Fake small caps with XeTeX/fontspec?)
+%
+% If the commands fail, see the next section.
+%
+% For classic only
+%\DeclareFontShape{TU}{lmr}{m}{scit} { <-> ssub * lmr/m/sc }{}
+%
+% For Adobe fonts only
+% MyriadPro does not have small caps, neither normal nor italic. A pity.
+\DeclareFontShape{TU}{MyriadPro(0)}{m}{scit} { <-> ssub * MyriadPro(0)/m/sc }{}
+\DeclareFontShape{TU}{MyriadPro(0)}{m}{sc} { <-> ssub * MyriadPro(0)/m/n }{}
+\DeclareFontShape{TU}{MyriadProSemibold(0)}{m}{sc} { <-> ssub * MyriadProSemibold(0)/m/n }{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Errors with the redeclaration of fonts may occur, e.g. when the font encoding
+% is wrongly specified. The following command definition \showfont prints
+% information about the given font, which should be used in the new font
+% declaration as parameters.
+%
+% The source is  https://tex.stackexchange.com/a/56097/47921
+% (Use of \scshape or \textsc with fontspec/xelatex)
+%
+% Usage examples:
+%  {\scshape \showfont Aa}
+%  {\fontspec[Letters=SmallCaps]{Myriad Pro Semibold} \showfont Aa}
+%  {\semiboldsans\textsc \showfont Aa}
+%  {\bfseries\scshape \showfont Aa}
+%
+\makeatletter
+\newcommand{\showfont}{Encoding: \f@encoding{},
+  Family: \f@family{},
+  Series: \f@series{},
+  Shape: \f@shape{},
+  Size: \f@size{}
+}
+\makeatother

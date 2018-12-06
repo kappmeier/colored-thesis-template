@@ -1,0 +1,352 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic setup
+% line spacing
+\usepackage[dvipsnames]{xcolor}
+
+% have klickable urls in pdf
+\usepackage{url}
+
+% include other pdf files. either for front and rear cover, but also for images
+\usepackage{pdfpages}
+
+% Do calculations
+%\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index
+\usepackage{makeidx}
+\renewcommand{\indexname}{Subject Index}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up bibliography. This section sets up both, the technical properties,
+% i.e. the packages to load and the files to read the references from, and
+% also the style of the bibliography.
+%
+% Use biber for setting up the bibliography instead of bibtex. Software like
+% kile will detect automatically whether it should run biber or bibtex.
+% Otherwise you have to use Biber instead of BibTex manually in your build
+% process.
+% The template can be used for bibtex and biber.
+% If missing either biber or biblatex.sty, use the following command.
+% apt-get install texlive-bibtex-extra biber
+\usepackage[
+  backend=biber, % Use biber
+  style=trad-alpha, % Citation like Abc88, the style in CS or Math.
+  url=false, % Do not show urls for non-web references, books, paper, etc.
+  doi=false, % Do not show DOI
+  isbn=false, % Do not show ISBN numbers
+]{biblatex}
+% Disable also language field
+\AtEveryBibitem{\clearlist{language}} % clears language
+%
+% add a colon after "in" for incollections, inbook, ...
+\renewbibmacro{in:}{\printtext{In:\intitlepunct}} 
+% use and before the final name of a list
+\renewcommand*{\finalnamedelim}{\addspace \bibstring {and}\space}
+% Reformat the volume number for collections
+\DeclareFieldFormat[incollection]{volume}{Volume #1 of}
+% Reformat the series in an incollection bibliography entry
+\DeclareFieldFormat[incollection]{series}{\mkbibemph{#1}}
+% Format the edition field to use typographic numbers
+\usepackage[super]{nth}
+\DeclareFieldFormat{edition}{%
+  \ifinteger{#1}
+    {\printtext{\nth{#1} edition}}
+    {\MakeLowercase{#1}~\bibstring{}}
+}
+% General style for a bibliography entry for the
+% volume, edition, number and pages section.
+\renewbibmacro*{volume+number+pages+eid}{%
+  \printfield{volume}%
+  \setunit*{\volumenumberdelim}%
+  \printfield{number}%
+  \setunit{\addcolon\addspace}
+  \printfield{pages}%
+  \newcommaunit%
+  \printfield{eid}%
+}%
+% Declare the style for online references. This is mostly a copy from
+% the bibtex source code with some modification. You probably can remove it
+\DeclareBibliographyDriver{online}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit
+  \printfield{note}%
+  \newunit\newblock
+  \printlist{organization}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{date}%
+  \newunit\newblock
+  \usebibmacro{url+urldate}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+\DeclareFieldFormat{titlecase}{#1}
+
+% Use the default color to format certain parts of a bibliography entry.
+\newcommand{\bibtitlehighlight}[1]{\color{\mainColor}\semiboldserif{#1}}
+
+% We have disabled printing of url, isbn, and doi in the format specification above.
+% However, when the bibliography entry in the references file contains such information,
+% make the entry clickable by linking to the url.
+% The following does the following:
+% When a DOI is given, this is used as it is the proper method to link to scientific documents
+% When no DOI is present, but an URL, the URL is used.
+% When only ISBN or ISSN is present, a link to Google book search is generated and used
+\newbibmacro{string+doiurlisbn}[1]{%
+  \iffieldundef{doi}{%
+    \iffieldundef{url}{%
+      \iffieldundef{isbn}{%
+        \iffieldundef{issn}{%
+          {\bibtitlehighlight{#1}}
+        }{%https://www.google.com/search?tbo=p&tbm=bks&q=issn:1052-6234
+          \href{https://www.google.com/search?tbo=p&tbm=bks&q=issn:\thefield{issn}}{\bibtitlehighlight{#1}}%
+        }%
+      }{%https://www.google.com/search?tbo=p&tbm=bks&q=isbn:9783642059148
+        \href{https://www.google.com/search?tbo=p&tbm=bks&q=isbn:\thefield{isbn}}{\bibtitlehighlight{#1}}%
+      }%
+    }{%
+      \href{\thefield{url}}{\bibtitlehighlight{#1}}%
+    }%
+  }{%
+    \href{http://dx.doi.org/\thefield{doi}}{\bibtitlehighlight{#1}}%
+  }%
+}
+% Use the above macro style for all online references.
+\DeclareFieldFormat[article,thesis,report,inproceedings,incollection,book,inbook,techreport,misc,online]{title}{\usebibmacro{string+doiurlisbn}{#1}}
+% Disable URLs in online publications.
+\DeclareFieldFormat[online]{url}{}
+%
+% You can add special case handling for certain bibliography items. In the example, we look
+% for an entry named 'SomeSpecialReference2008' and add a \linebreak manually.
+\renewbibmacro{begentry}{%
+  \iffieldequalstr{entrykey}{SomeSpecialReference2008}%
+    %{}%
+    {\renewcommand{\bibpagespunct}{\addcomma\linebreak\addspace}}%
+    {}%
+}%
+
+%
+% This loads the bibliography from references.bib file, independently whether
+% biber or bibtex is used.
+\makeatletter
+\@ifpackageloaded{biblatex}{\addbibresource{references.bib}}{\bibliography{references}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nomenclature.
+\usepackage[intoc,refpage]{nomencl}
+\setlength{\nomitemsep}{-\parsep}
+% Use a different title for the nomenclature
+\renewcommand{\nomname}{Notation Index}
+% Avoids printing the page link when the page does not have an integer number.
+% This happens for the nomenclature.tex included before the document begins.
+% It will have Letter A or i, because it is placed in the front matter. thefield
+% entries in this part are supposed to be general notation which is not
+% explicitly defined in the text of the thesis. For example, N, the set of
+% natural numbers, which should be clear in any advanced topic.
+\def\pagedeclaration#1{\IfInteger{#1}{\hfill\hyperlink{page.#1}{\color{\mainColor}\nobreakspace#1}}{}}
+\setlength\nomlabelwidth{2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Generally useful packages
+%
+% Make decisions
+\usepackage{ifthen}
+%
+% Have TODO information added to the thesis (and remove them all at once!)
+% When used with TikZ externalize, all todo notes will result in pictures!
+% This has to be modified after TikZ has been loaded. See below for the
+% redefinition of the \todo command.
+\usepackage[disable]{todonotes}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics using TikZ
+%
+\usepackage{tikz}
+%
+% A list of libraries that are important.
+\usetikzlibrary{calc} % coordinate calculations
+\usetikzlibrary{decorations}
+\usetikzlibrary{intersections}
+\usetikzlibrary{matrix}
+\usetikzlibrary{external}
+\usetikzlibrary{patterns}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{fadings}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows}
+
+%
+% Plotting
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+\usepgfplotslibrary{fillbetween}
+
+
+% Notice: enabling a sub directory here instead of writing to the original
+% figures directory, crashes the live preview in Kile. The problem is with
+% the -output-directory flag that points to some temp node. A workaround is
+% to use the read build (XeLaTex) which produces the .pdf files and then then
+% the preview does not have to rebuild the image files.
+%\tikzexternalize[figures/compiled/,up to date check=md5]
+\tikzexternalize[prefix=figures/compiled/,up to date check=diff]
+\tikzset{external/system call={xelatex \tikzexternalcheckshellescape
+   -output-driver="xdvipdfmx -V 4" -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}}
+\tikzset{external/only named=true}
+
+
+% Load todonotes and avoid externalizing the notes by externalize.
+\makeatletter
+\renewcommand{\todo}[2][]{\tikzexternaldisable\@todo[#1]{#2}\tikzexternalenable}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithms
+% Install in Ubuntu: algorithm2e sudo apt-get install texlive-science
+% Requires packages: etoolbox
+%
+\usepackage[ruled,algochapter,dotocloa]{algorithm2e}
+%
+% Define input and output keywords
+\makeatletter
+\renewcommand{\SetKwInOut}[2]{%
+  \sbox\algocf@inoutbox{\KwSty{#2}\algocf@typo:\hspace{1ex}}%
+  % define the dimension of the box
+  \expandafter\ifx\csname InOutSizeDefined\endcsname\relax% if first time used
+    \newcommand\InOutSizeDefined{}\setlength{\inoutsize}{\wd\algocf@inoutbox}%
+    \sbox\algocf@inoutbox{\parbox[t]{\inoutsize}{\KwSty{#2}\algocf@typo:\hfill}~}
+    \setlength{\inoutindent}{\wd\algocf@inoutbox}%
+  \else% else keep the larger dimension
+    \ifdim\wd\algocf@inoutbox>\inoutsize%
+      \setlength{\inoutsize}{\wd\algocf@inoutbox}%
+      \sbox\algocf@inoutbox{\parbox[t]{\inoutsize}{\KwSty{#2}\algocf@typo:\hfill}~}
+      \setlength{\inoutindent}{\wd\algocf@inoutbox}%
+    \fi%
+  \fi%
+  % redefine the algorithm command
+  \algocf@newcommand{#1}[1]{%
+    \ifthenelse{\boolean{algocf@inoutnumbered}}{\relax}{\everypar={\relax}}%
+    {
+      \vspace{1mm}
+      \let\\\algocf@newinout\hangindent=\inoutindent\hangafter=1\parbox[t]{\inoutsize}{\KwSty{#2}\algocf@typo:\hfill}~##1
+      \par
+      \vspace{1mm}
+    }%
+    \algocf@linesnumbered% reset line numbers
+  }}%
+\makeatother
+%
+% Initialize the new keywords.
+\newcommand{\initalgo}{
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+}
+\initalgo
+%
+% Redefine the algorithm environment to have horizontal lines around the
+% headline and at the bottom.
+\makeatletter
+\renewcommand{\algocf@caption@boxruled}{%
+  \hrule
+  \hbox to \hsize{%
+    \vrule\hskip-0.4pt
+    \vbox{
+      \vskip\interspacetitleboxruled%
+      \unhbox\algocf@capbox\hfill
+      \vskip\interspacetitleboxruled
+    }%
+    \hskip-0.4pt\vrule%
+  }\nointerlineskip%
+}%
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings.
+% Sometimes a real source code listing is required, and not an algorithm.
+\usepackage{listings}
+\lstset{%
+  % Small font
+  basicstyle=\small\ttfamily,
+  % The default language. Can be modified on each code block
+  language=[LaTeX]{TeX}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% General style
+%
+% allow figures to appear only after the first reference
+\usepackage{flafter}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define environments (Theorem, Lemma, etc)
+% the following uses one counter only for definitions, theorems and lemmas
+% counters are reset by the section
+% definition theorem style will use italic font for normal text
+\usepackage{amsthm}
+\allowdisplaybreaks
+\makeatletter
+\newtheoremstyle{thesisplain}% name of the style
+  {3pt}% space above
+  {3pt}% space below
+  {\itshape}% body font
+  {}% indent
+  {\color{\mainColor}\semiboldsans}% header font
+  {.}% including dot at end of header
+  {.5em}% and some space after header
+  {{\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }#2}}%
+   \thmnote{ {\sffamily\itshape\the\thm@notefont(#3)}}}%
+\newtheoremstyle{thesisdefinition}% <name>
+  {3pt}% <Space above>
+  {3pt}% <Space below>
+  {}% <Body font>
+  {}% <Indent amount>
+  {\color{\mainColor}\semiboldsans}% <Theorem head font>
+  {.}% <Punctuation after theorem head>
+  {.5em}% <Space after theorem heading>
+  {{\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }#2}}%
+   \thmnote{ {\sffamily\itshape\the\thm@notefont(#3)}}}%
+\makeatother
+
+\usepackage{thmtools}
+
+\theoremstyle{thesisdefinition}
+\declaretheorem[style=thesisdefinition,name=Definition,numberwithin=chapter,qed=$\triangleleft$]{definition}
+
+% Define several numbered environments.
+\theoremstyle{thesisplain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{observation}[definition]{Observation}
+\newtheorem{example}[definition]{Example}

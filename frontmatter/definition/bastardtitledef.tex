@@ -1,0 +1,17 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+  \extratitle{
+    \setlength{\parindent}{0pt}
+    {\centering { \Large \semiboldsans \@title } \\ \vspace{2mm} {\@author}\\}
+    \clearpage
+    \null\vfill
+    \thispagestyle{empty}
+    \ifx\coverimagedescription\empty
+    \else
+      \textbf{Cover image:}\\{\coverimagedescription}
+    \fi
+  }
+\makeatother
+ 

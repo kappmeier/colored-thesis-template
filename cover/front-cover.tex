@@ -1,0 +1,39 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+\documentclass{standalone}
+
+% Include the thesis parameters with data for the cover pages
+\input{../thesisproperties}
+
+% Include the page size definitions
+\input{definitions}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+  \begin{tikzpicture}[outer sep=1.5mm]
+    \useasboundingbox (0mm,0mm) rectangle (-\pagewidth,\pageheight);
+
+    % Filled background
+    \fill[gray] (0mm,0mm) rectangle (-\pagewidth,\pageheight);
+
+    % The image. We use a right corner as anchor and shift by the amount of border separation.
+    \path (\sepwidth, -\sepwidth) node[anchor=south east, inner sep=0mm, outer sep=0mm] {\includegraphics[height=\fullpageheight]{complete-cover-border-3mm-back-8mm}};
+
+    % Text on the title page, long title split in two lines
+    \path(-10mm,260mm) node[white,anchor=south east] {\Huge{\thesistitlea}};
+    \path(-10mm,247mm) node[white,anchor=south east] {\Huge{\thesistitleb}};
+    \path(-10mm,237mm) node[white,anchor=south east] {\Large{\thesisauthor}};
+    \path(-200mm,40mm) node[white,anchor=west] {\Large{\thesistype}};
+    \path(-200mm,31mm) node[white,anchor=west] {\Large{\institution}};
+    \path(-10mm,30mm) node[white,anchor=east] {\Large{\thesisyear}};
+
+    % Help lines
+    % A red frame around front page
+    \draw[red] (0mm,0mm) rectangle (-\pagewidth,\pageheight);
+    % A diagonal line over the complete page
+    \draw[red,thick,dashed] (0mm,0mm) to (-\pagewidth,\pageheight);
+  \end{tikzpicture}
+
+\end{document}

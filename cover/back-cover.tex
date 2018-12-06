@@ -1,0 +1,30 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+\documentclass{standalone}
+
+% Include the thesis parameters with data for the cover pages
+\input{../thesisproperties}
+
+% Include the page size definitions
+\input{definitions}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+  \begin{tikzpicture}[outer sep=1.5mm]
+    \useasboundingbox (-\pagewidth-\backwidth,0mm) rectangle (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+
+    % Filled background
+    \fill[gray] (-\pagewidth-\backwidth,0mm) rectangle (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+
+    % The image. We use a right corner as anchor and shift by the amount of border separation.
+    \path (\sepwidth, -\sepwidth) node[anchor=south east, inner sep=0mm, outer sep=0mm] {\includegraphics[height=\fullpageheight]{complete-cover-border-3mm-back-8mm}};
+
+    % A red frame around back page
+    \draw[red] (-\pagewidth-\backwidth,0mm) rectangle (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+    % A diagonal line over the complete page
+    \draw[red,thick,dashed] (-\pagewidth-\backwidth,0mm) to (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+   \end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,121 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modern customizable latex template for a PhD thesis working with XeLaTeX,
+% biber and Biblatex based on KOMA script classes. The class is based on
+% metric system and measurements widely agreed to be useful.
+\documentclass[
+a4paper,             % paper size
+11pt,                % font size
+BCOR=8mm,            % binding correction
+DIV=12,              % computation of type area, also DIV=calc for automatic calculation
+index=totoc,         % add an entry for contents in table of contents
+listof=totoc,        % add entry for table of figures in contents
+bibliography=totoc,  % add an entry for bibliography to contents
+fleqn,               % equations left aligned
+headinclude=true,    % include size of header in type area calculation
+footinclude=false,   % do not include size of footer in type area calculation, these settings give better results despite being counter intuitiveley
+%draft,              % faster compilation mode, ignores figures and displays boxes for overful hboxes
+]
+{scrbook}            % main class for books
+% Contains metadata about the author and the thesis. The information is used
+% for the cover, title, etc.
+\input{thesisproperties}
+
+% setup fonts
+\input{setup/fonts}
+
+\usepackage{scrhack} % some additional hacks for the document class. Option clash with xparse defined by fonts, so this must come after fonts
+
+% setup language. Here you can add hyphenation hints.
+\input{setup/language}
+
+% setup basic packages
+\input{setup/setup}
+
+% setup main layout
+\input{setup/layout}
+
+% Additional user defined commands
+\input{commands/text_commands}
+\input{commands/gfx_commands}
+
+% Set up nomenclature intermediate headings, depending on the first letter.
+\renewcommand{\nomgroup}[1]{%
+  \ifthenelse{\equal{#1}{B}}{\item[\textbf{Basic Notation}]}{%
+    \ifthenelse{\equal{#1}{G}}{\item[\textbf{General Notation}]}{%
+    }%
+  }%
+}%
+\makenomenclature
+
+\makeindex
+
+% Includes general notation that shall not have page number referenced
+\input{notation}
+
+% Read data from tables
+\pgfplotstableread[col sep=comma]{data/plot/experimental-results.csv}\tableexperimentalresults
+
+\begin{document}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % The front cover is excluded from both numberings, front matter
+  % (small roman) and main matter (numbers). We therefore use capital letters.
+  \pagenumbering{Alph}
+  \includepdf{cover/front-cover.pdf}
+  \clearpage
+
+  
+  
+  
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Front matter.
+  % Front matter contains the pre-content stuff, including title page and table
+  % of contents.
+  \frontmatter
+  \input{frontmatter.tex}% Need to add the ending .tex here, otherwise fails.
+
+  
+  
+  
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Switch to main matter with "normal" page counting. Starts with 1
+  % Main matter contains the content of the thesis starting with number 1 on the
+  % first page. Content may be preceeded with a dictum, which also can be placed
+  % as last position in the front matter. To achieve this, just switch the order
+  % of mainmatter and inclusion of dictum.
+  \mainmatter
+  \input{mainmatter.tex}
+
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Switch to back matter.
+  % Back matter contains appendix, lists and bibliography. Numbering continues
+  % as in the main matter.
+  \backmatter
+  \input{backmatter.tex}
+
+  
+  
+  
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % For the back cover, return to capital letter numbering, continuing with
+  % the same values as for the front cover
+
+  \pagenumbering{Alph}
+  \setcounter{page}{3}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Include the back cover on the *back* of the last page.
+  % Normally, we are on the right page. However, the back cover is on the back
+  % we need to skip another page. 
+  % Manual page clear as clearpage does not work after cleardoublepage
+
+  \newpage\leavevmode\thispagestyle{empty}\newpage
+  \includepdf{cover/back-cover.pdf}
+
+\end{document}

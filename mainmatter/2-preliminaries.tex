@@ -1,0 +1,260 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{chapterabstract}
+  This chapter really contains some example content. There are some pictures, algorithms, and advanced formatted
+  text, including math.
+  There is also some math predefined.
+\end{chapterabstract}
+
+\section{Including a TikZ Picture}
+
+The template configuration contains already the TikZ package, including some libraries that are often used with advanced drawing. The template also defines three colors to be used by default in graphics. The first color is the same as the main style color of the thesis. The following colors should be selected to go well with the main color but also create some contrast. They should be ordered by priority. Such that the main color is used in most figures, the second color is second most often used, and so on. The other colors will most likely be used in diagrams. A last color is predefined as some grey. These colors, together with black and white (and, if necessary shaded versions) allow for a great variety of pictures supporting the layout and style.
+The simplest way is to include a figure within a tikzpicture environment following with the code. The following listing is the start of Figure~\ref{fig:example-figure-stuff}.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{node}=[draw, circle, minimum size=3ex, fill=\flatColor!20, inner sep=0.7mm]
+    \tikzstyle{edge}=[draw]
+    
+    \node[node, thick, \figureColorB, text=black] (P) at (0, 0) {\small P};
+    \path (P) +(2.2, 1.8) node[node] (1) {}
+                        edge[edge] node[sloped, above] {3} (P) 
+              +(2, 0) node[node] (2) {} 
+                        edge[edge] node[sloped, above] {2} (P)
+              +(2.5, -1.5) node[node] (3) {}
+                         edge[edge] node[sloped, below] {2} (P)
+                         edge node[right] {1} (2)
+              +(5, 2.2) node[node] (4) {} 
+                         edge[edge] node[sloped, above] {4} (1)
+              +(4.5, 0.5) node[node] (5) {}
+                         edge[edge] node[sloped, below] {2} (1)
+                         edge[edge] node[sloped, below] {3} (2)
+                         edge[edge] node[sloped, below] {1} (3)
+              +(5.2, -1.8) node[node] (6) {}
+                         edge[edge] node[sloped, below] {3} (3)
+                         edge[edge] node[left] {6} (5)
+              +(7, 1.6) node[node] (7) {}
+                         edge[edge] node[sloped, below] {6} (4)
+                         edge[edge] node[sloped, below] {2} (5)
+              +(6.5, -0.5) node[node] (8) {}
+                         edge[edge] node[sloped, below] {3} (5)
+                         edge[edge] node[right] {3} (7)
+              +(9.5, 2.2) node[node] (9) {}
+                         edge[edge] node[sloped, above] {2} (4)
+                         edge[edge] node[sloped, below] {3} (7)
+              +(9.5, -0.8) node[node] (10) {}
+                         edge[edge] node[sloped, below] {8} (6)
+                         edge[edge, very thick, \figureColorC] (8)
+              +(11.3, -1.8) node[node] (11) {}
+                         edge[edge] node[sloped, below] {1} (6)
+                         edge[edge] node[sloped, above] {2} (10)
+              +(12.5, 0) node[node, thick, \figureColorB, text=black] (W) {\small W}
+                         edge[edge] node[sloped, below] {3} (7)
+                         edge[edge] node[sloped, below] {9} (9)
+                         edge[edge] node[sloped, above] {4} (10)
+                         edge[edge] node[sloped, below] {4} (11);
+  \end{tikzpicture}
+
+  \caption[Example figure with short text for the list of figures.]{An example figure using tikzpicture environment. The figure uses three of the predefined colors and defines custom node styles with the colors.}
+  \label{fig:example-figure-stuff}
+  
+\end{figure}
+
+The Voderberg spiral\footnote{\url{https://en.wikipedia.org/wiki/Voderberg_tiling}} is more complex to draw. The sprial with 4 circles
+as depicted in the following Figure~\ref{fig:chapter-3-voderberg} takes something between 30 seconds and a minute to compile. For such
+images it is very useful to use externalize.
+
+This is even more important as a Thesis will probably contain over 9000 images.
+
+\begin{figure}
+  \centering
+    \tikzsetnextfilename{example-figure-voderberg}
+    \input{mainmatter/figures/example-figure-voderberg.tikz}
+
+  \caption[The Voderberg spiral.]{A complex example picture: The Voderberg spiral.}
+  \label{fig:chapter-3-voderberg}
+\end{figure}
+
+\section{Diagrams}
+
+The pgfplots package is also included, such that diagrams can easily be included. For the following example, a file containing data is located in \textsc{data/plot/experimental-results.csv} and the table is stored in \\tableexperimentalresults.
+
+\begin{figure}
+  \centering
+  \vspace{1cm}
+  \tikzsetnextfilename{experimental-results}
+  \begin{tikzpicture}
+     \begin{axis}[
+                  axis background/.style={fill=white}, legend style={fill=white,text=black},
+                  xlabel={Time ($s$)},
+                  ylabel={Quality},
+                  legend entries={Category $A$,Category $B$,Category $C$,Category $D$},
+                  legend cell align=left,
+                  legend style={legend pos=south east,font=\tiny},
+                  width=13cm,
+                  height=8cm,
+                  xlabel style={yshift=1.5mm},
+                  ylabel style={yshift=-1mm},
+                  x coord trafo/.code={\pgfmathparse{\pgfmathresult/60}},
+                  x coord inv trafo/.code={\pgfmathparse{\pgfmathresult*60}},
+                  grid=major
+                ]
+      \addplot[mark repeat=62,mark phase=103,color=\figureColorA,mark=square*,mark options={scale=0.66}] table [x=time, y=A] {\tableexperimentalresults};
+
+      \addplot[mark repeat=60,mark phase=85,color=\figureColorB,mark=triangle*,mark options={scale=0.66}] table [x=time, y=B] {\tableexperimentalresults};
+
+       \addplot[mark repeat=60,mark phase=92,color=\figureColorC,mark=*,mark options={scale=0.66}] table [x=time, y=C] {\tableexperimentalresults};
+
+       \addplot[mark repeat=60,mark phase=80,color=\figureColorD,mark=diamond*,mark options={scale=0.66}] table [x=time, y=D] {\tableexperimentalresults};
+    \end{axis}
+  \end{tikzpicture}
+  \caption[A diagram.]{A diagram.}%
+  \label{fig:experimental-results}%
+\end{figure}
+
+\section{Algorithms}
+
+The algorithm environment.
+
+\begin{algorithm}[H]
+  \Input{Some input data.}
+  \Output{The result after the algorithm's computation.}
+
+  % Otherwise we get overfull boxes.
+  \parbox{0.88\textwidth}{
+    \begin{enumerate}
+      \item The first step of the algorithm.
+      \item For each source:
+          \begin{enumerate}
+            \item Do some sum steps
+            \item And even another step
+          \end{enumerate}
+      \item Yeah, done. return te result
+    \end{enumerate}
+  }
+  \caption{An example algorithm.}
+  \label{algo:example}
+\end{algorithm}
+
+The above Algorithm~ref{algo:example} is created by the following code: 
+
+\begin{lstlisting}
+  \begin{algorithm}[H]
+    \Input{Some input data.}
+    \Output{The result after the algorithm's computation.}
+
+    % Otherwise we get overfull boxes.
+    \parbox{0.88\textwidth}{
+        \begin{enumerate}
+        \item The first step of the algorithm.
+        \item For each source:
+            \begin{enumerate}
+                \item Do some sum steps
+                \item And even another step
+            \end{enumerate}
+        \item Yeah, done. return te result
+        \end{enumerate}
+    }
+    \caption{An example algorithm.}
+    \label{algo:example}
+  \end{algorithm}
+\end{lstlisting}
+
+\section{Mathematical Environments}
+
+The sauce of mathematics its the environments for defintions, theorems, lemmas, etc. And of course proofs. We will show some of them in the remainder of this chapter.
+
+\paragraph{Setup} All environments are defined to be numbered after the chapter (for this chapter it is \ref{chapter:preliminaries}), following with sub-numbers starting with one. All the environments share the same counter.
+
+The definitions are formatted in regular text, while all other environments (theorems, lemmas, corollarys, observations, and examples) are formatted with italic text. Definitions are enclosed with a triangle.
+
+Proofs are also in regular text and are enclosed with a square.
+
+\begin{definition}\label{def:example}
+  This is a definition. Definitions are written in regular font and end with a small triangle on the last line.
+  
+  We define an $\nabla$\nomenclature[b ]{$\nabla$}{some random letter}
+ to be some important basic thing that is needed in future chapters.
+\end{definition}
+
+\begin{theorem}\label{thm:atheorem}
+  And this is a theorem. It is written in italic/math font.
+\end{theorem}
+\begin{proof}
+  Of course, every theorem nees a proof. Here it is.
+  
+  The proof ends with the q.\,e.\,d. symbol, a square, on the last line.
+\end{proof}
+
+\begin{corollary}
+  A corollary follows from a theorem, this one is based on Theorem~\ref{thm:atheorem}.
+\end{corollary}
+\begin{proof}
+  If you are a real scientist and not frivolous impostor, even a corollary needs a proof.
+\end{proof}
+
+\begin{lemma}\label{lemma:example-lemma}
+  Sometimes, you may also need lemmas. Mostly to prove stuff, but if you are lucky, a lemma of yours becomes famous. \cite{Zorn1935}
+\end{lemma}
+\begin{proof}
+  We leave this as exercise to the reader. Yes, I was too lazy to prove this. I was even to lazy to give an outline of a proof. So, you should expect that it is actually false! Don't to stupid things like this. In a few yeras, some pedantic student will find the error and than it is at least embarrassing for you, but probably they say ``Look at your doctorate, here it goes''.
+\end{proof}
+
+\begin{observation}
+  It is easy to see from \ref{lemma:example-lemma} that also the following holds:
+\end{observation}
+
+\begin{example}
+  After all that theoretic stuff, we have a small example here. 
+\end{example}
+
+
+
+
+\section{Problem Statements}
+
+The following is a problem definition \ie a box with some text.
+
+\problemDef{The Important}{An input to the important problem}{An output of the important problem}{And some explaining text.
+
+Can even contain math.
+\[ \begin{aligned}
+  \left\{\frac{1}{2}\right\}^e
+\end{aligned} \]
+}
+
+The box is created using this code:
+
+\begin{lstlisting}
+  \problemDef{The Important}{An input to the important problem}
+    {An output of the important problem}{And some explaining text.
+
+  Can even contain math.
+  \[ \begin{aligned}
+    \left\{\frac{1}{2}\right\}^e
+  \end{aligned} \]
+  }
+\end{lstlisting}
+
+
+\nomenclature[b ]{$\alpha$}{The greek letter alpha}
+
+\section{Adding to the Subject Matter (Index)}\label{sec:index}
+
+There are a few convenience commands to add to the \idx{subject matter}. The following \eidx{commands}{command} are defined:
+
+\begin{lstlisting}
+  \newcommand{\idx}[1]{\index{#1}#1}
+  \newcommand{\eidx}[2]{\index{#2}#1}
+  \newcommand{\emphidx}[1]{\index{#1}\emph{#1}}
+  \newcommand{\empheidx}[2]{\index{#2}\emph{#1}}
+\end{lstlisting}
+
+The initial description at the section start is formatted the following, which yields ``\emph{subject matter}'' and ``\emph{command}'' to be entries at the subject matter (cf. page~\pageref{lbl:index}).
+
+\begin{lstlisting}
+  There are a few convenience commands to add to the \idx{subject matter}.
+  The following \eidx{commands}{command} are defined:
+\end{lstlisting}

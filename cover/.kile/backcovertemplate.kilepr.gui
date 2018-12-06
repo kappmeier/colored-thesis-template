@@ -1,0 +1,49 @@
+[General]
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-XeLaTeX
+lastDocument=back-cover.tex
+
+[document-settings,item:back-cover.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:definitions.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[item:back-cover.tex]
+open=true
+order=1
+
+[item:backcovertemplate.kilepr]
+open=false
+order=-1
+
+[item:definitions.tex]
+open=true
+order=0
+
+[view-settings,view=0,item:back-cover.tex]
+CursorColumn=94
+CursorLine=14
+JumpList=
+TextFolding=[]
+ViMarks=.,16,0,[,16,0,],16,0
+
+[view-settings,view=0,item:definitions.tex]
+CursorColumn=0
+CursorLine=2
+JumpList=
+TextFolding=[]
+ViMarks=.,2,0,[,2,0,],2,0

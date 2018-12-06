@@ -1,0 +1,76 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% General text definitions.
+% This contains commands that form text.
+%
+% Use to define typographic abbreviations.
+\usepackage{xspace}
+% Use to do some fancy string manipulation
+\usepackage{xstring}
+
+\usepackage{xargs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abbreviations.
+%
+% Some commands that are common abbreviations, similar to the \iif command.
+% Some commands that are often used in scientific/mathematical writing
+% are absolutely *never* to be used in written documents! (They are ok on
+% the white/black board or in lecture scripts.)
+%
+% Some other abbreviations are allowed to be used in formal texts. The
+% following definitions take care for correct spacing. If the abbreviations
+% makes sense to be used at the start of a sentence, they are available in
+% capital and minor initial letters.
+\newcommand{\ie}{i.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]e.,\@\xspace}
+\newcommand{\Ie}{I.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]e.,\@\xspace}
+\newcommand{\eg}{e.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]g.,\@\xspace}
+% The following abbreviations should *never* be used in written documents!
+% \newcommand{\wlogk}{...}
+% \newcommand{\Wlog}{...}
+% \newcommand{\wrt}{...}
+
+
+\newcommand{\problemidx}[1]{\index{#1@\textsc{#1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematical problems.
+\newcommand{\problemDef}[4]{%
+  \StrGobbleLeft{#1}{1}[\lastPart]%
+  \StrLeft{#1}{1}[\firstLetter]%
+  \begin{center}%
+    \setlength{\mathindent}{0cm}%
+    \framebox{%
+      \parbox{0.8\textwidth}{%
+      \begin{tabular}{p{0.105\textwidth}p{0.65\textwidth}@{}}%
+        {\sffamily Problem:} & {\ \hspace{-0.3333em}\sffamily\color{\mainColor}#1\problemidx{#1 Problem}}\\[2mm]%
+        \emph{Instance}: & #2\tabularnewline[2mm]%
+        \emph{Task}:     & #3%
+      \end{tabular}%
+      \ifstrempty{#4}%
+        {}%
+        {%
+          \setlength{\mathindent}{\standardIntend}\\[2mm]%
+          #4%
+        }%
+      }%
+    }%
+  \end{center}%
+}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index definitions.
+% The \idx command writes a word and at the same time adds it to the index 
+\newcommand{\idx}[1]{\index{#1}#1}
+% The \eidx writes a word and at the same time uses a different word for the
+% index. Use if a word is used in a different grammatical form than used in
+% the index.
+\newcommand{\eidx}[2]{\index{#2}#1}
+% Highlights a word using \emph and places it in the index
+\newcommand{\emphidx}[1]{\index{#1}\emph{#1}}
+% Highlights a word and uses a different word for the index. See \eids
+\newcommand{\empheidx}[2]{\index{#2}\emph{#1}}
+% Add own index versions here, for definitions, problems, different styles

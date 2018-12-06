@@ -1,0 +1,47 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+\documentclass{standalone}
+
+% Include the data for the cover pages
+\input{data}
+
+% Include the page size definitions
+\input{definitions}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+  \begin{tikzpicture}[outer sep=1.5mm]
+    \useasboundingbox (\sepwidth,-\sepwidth) rectangle (-\pagewidth-\backwidth-\pagewidth-\sepwidth,\pageheight+\sepwidth);
+
+    % Filled background
+    \fill[gray] (0mm,0mm) rectangle (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+
+    % The image. We use a right corner as anchor and shift by the amount of border separation.
+    \path (\sepwidth, -\sepwidth) node[anchor=south east, inner sep=0mm, outer sep=0mm] {\includegraphics[height=\fullpageheight]{complete-cover-border-3mm-back-8mm}};
+
+    % Text on the title page
+    \path(-10mm,260mm) node[white,anchor=south east] {\Huge{\titletextla}};
+    \path(-10mm,247mm) node[white,anchor=south east] {\Huge{\titletextlb}};
+    \path(-10mm,237mm) node[white,anchor=south east] {\Large{\docauthor}};
+    \path(-200mm,40mm) node[white,anchor=west] {\Large{\doctype}};
+    \path(-200mm,31mm) node[white,anchor=west] {\Large{\institution}};
+    \path(-10mm,30mm) node[white,anchor=east] {\Large{\additionalinfo}};
+    
+    % Text on the brim
+    \path(-\pagewidth-.5\backwidth,248mm) node[white,rotate=90,anchor=west] {\large{\docauthor}};
+    \path(-\pagewidth-.5\backwidth,158mm) node[white,rotate=90,anchor=east] {\large{\titletext}};
+
+    % Help lines
+    % A red frame around front page
+    \draw[red] (0mm,0mm) rectangle (-\pagewidth,\pageheight);
+    % A diagonal line over the complete page
+    \draw[red,thick,dashed] (0mm,0mm) to (-\pagewidth,\pageheight);
+    % A red frame around back page
+    \draw[red] (-\pagewidth-\backwidth,0mm) rectangle (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+    % A diagonal line over the complete page
+    \draw[red,thick,dashed] (-\pagewidth-\backwidth,0mm) to (-\pagewidth-\backwidth-\pagewidth,\pageheight);
+  \end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,43 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand{\customtitlepage}{
+  \begin{center}%
+    {\usekomafont{title}{\huge \@title \par}}%
+        \vskip 1em
+        {\ifx\@subtitle\@empty\else\usekomafont{subtitle}{\@subtitle\par}\fi}%
+        \vskip 2em
+        \small{%
+      {%
+      \lineskip 0.75em
+      \vspace{3em}%
+      vorgelegt von\\[2ex]
+      MSc.\\
+      \@author\\
+      geboren in Springfield.
+      \\[11ex]
+      Von der Fakultät II -- Mathematik und Naturwissenschaften\\
+      der Technischen Universität Berlin\\
+      zur Erlangung des akademischen Grades
+      \\[2ex]
+      Doktor der Naturwissenschaften\\
+      -- Dr.\ rer.\ nat.\ --
+      \\[2ex]
+      eingereichte Dissertation.
+      \\[7ex]
+      Promotionsausschuss\\[1ex]
+      \begin{tabular}{rl}
+        Vorsitzender: & \chairman \\[0.5ex]
+        Berichter: & \supervisor \\[0.5ex]
+        Berichter: & \examiner
+      \end{tabular}
+      \\[4ex]
+      \large Tag der wissenschaftlichen Aussprache:\quad \@date \par
+      }%
+    }%
+\vfill
+{\Large \thesisplace{} \thesisyear}%
+  \end{center}%
+}
+\makeatletter

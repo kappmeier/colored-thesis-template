@@ -1,0 +1,28 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+\usepackage{calc}
+
+\usepackage{unicode-math}
+
+\usepackage{fontspec}
+
+\setmainfont[Ligatures=TeX]{Myriad Pro Semibold}
+\setsansfont[Ligatures=TeX]{Myriad Pro Semibold}
+
+\usepackage{tikz}
+\newcommand{\createlength}[2] % Two args: 1) name ; 2) value
+{
+  \newlength{#1}     % creates the new length variable/command
+  \setlength{#1}{#2} % and sets it right here
+}
+
+% Primary lengths
+% Visible height of front cover. 297mm for Din A4
+\createlength{\pageheight}{297mm}
+% Visible width of front cover. 210mm for Din A4
+\createlength{\pagewidth}{210mm}
+\createlength{\sepwidth}{3mm}
+\createlength{\backwidth}{8mm}
+
+% Computed lengths
+\createlength{\fullpageheight}{\pageheight+\sepwidth+\sepwidth}

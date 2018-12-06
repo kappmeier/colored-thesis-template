@@ -1,0 +1,49 @@
+[General]
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-XeLaTeX
+lastDocument=front-cover.tex
+
+[document-settings,item:definitions.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:front-cover.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[item:definitions.tex]
+open=false
+order=1
+
+[item:front-cover.tex]
+open=false
+order=0
+
+[item:frontcovertemplate.kilepr]
+open=false
+order=-1
+
+[view-settings,view=0,item:definitions.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=.,-1,-1,[,-1,-1,],-1,-1
+
+[view-settings,view=0,item:front-cover.tex]
+CursorColumn=156
+CursorLine=19
+JumpList=
+TextFolding=[]
+ViMarks=.,18,117,[,18,115,],18,117

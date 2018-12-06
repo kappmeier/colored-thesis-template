@@ -1,0 +1,31 @@
+% PhD thesis template
+% © Jan-Philipp Kappmeier, Apache License 2.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adding a dictum for the whole thesis at the beginning.
+% Note: This is not the typical dictum at the beginning of each chapter.
+
+\thispagestyle{\chapterpagestyle}
+\chapterheadstartvskip
+\vphantom{{\usekomafont{chapter}1ABCDEFGHIJKLMNOPQRSTUVWXYZ}}
+\chapterheadendvskip
+\vspace{\baselineskip}
+\dictum[3. Ferengi Rule of Acquisition.]{A woman wearing clothes is like a man in the kitchen.}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include the actual thesis' contens here.
+
+\chapter{Introduction}\label{chapter:introduction}
+\input{mainmatter/1-introduction}
+
+\chapter{Preliminaries}\label{chapter:preliminaries}
+\input{mainmatter/2-preliminaries} 
+
+\chapter{Stuff}\label{chapter:stuff}
+\input{mainmatter/3-shizzle}
+
+\chapter{Math}\label{chapter:dizzle}
+\input{mainmatter/4-dizzle}
